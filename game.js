@@ -31,7 +31,7 @@ function show_level_select() {
       i = '&nbsp;';
        else for (i = '', r = storage['ab_level_' + t].split(':') [1], u = 0; u <= 2; u++) i += r > u ? '&#9733;' : '&#9734;';
       n += '<td onclick="start_game(' + t + ');">' + (
-        o ? t + 1 + '<div style="margin-top:-19px;">' + i + '</div></td>' : '<img src="sprites/lock.png">'
+        o ? t + 1 + '<div style="margin-top:-19px;">' + i + '</div></td>' : '<img src="/sprites/lock.png">'
       ),
       t++,
       r ||
@@ -118,7 +118,7 @@ var g_resources = function () {
     n++
   ) t.push({
     type: 'image',
-    src: 'sprites/' + i[n] + '.png'
+    src: '/sprites/' + i[n] + '.png'
   });
   return t
 }(),
@@ -536,7 +536,7 @@ GameLayer = cc.Layer.extend({
   slingRubber3: null,
   current_bird: 0,
   getTexture: function (n) {
-    return cc.TextureCache.getInstance().addImage('sprites/' + n + '.png')
+    return cc.TextureCache.getInstance().addImage('/sprites/' + n + '.png')
   },
   addObject: function (n) {
     var t = cc.Sprite.createWithTexture(this.getTexture(n.name));
@@ -582,8 +582,8 @@ GameLayer = cc.Layer.extend({
         game.isPanning = !1
       },
       document.getElementById('play_button').onclick = show_level_select,
-      document.getElementById('play_button').innerHTML = '<img src="sprites/play.png">',
-      document.getElementById('viewport').style.cursor = 'url(\'sprites/cursor_open.cur\'), pointer'
+      document.getElementById('play_button').innerHTML = '<img src="/sprites/play.png">',
+      document.getElementById('viewport').style.cursor = 'url(\'/sprites/cursor_open.cur\'), pointer'
     ),
     document.getElementById('win_popup').style.display = 'none',
     document.getElementById('lose_popup').style.display = 'none',
@@ -2203,7 +2203,7 @@ onTouchesBegan: function (n, t) {
     }
 
     this.isDraggingSling
-      ? document.getElementById('viewport').style.cursor = 'url("sprites/cursor_hold.cur"), pointer'
+      ? document.getElementById('viewport').style.cursor = 'url("/sprites/cursor_hold.cur"), pointer'
       : (
         this.isPanning = {
           x: n[0]._point.x * cc.Director.getInstance()._contentScaleFactor,
@@ -2283,7 +2283,7 @@ onTouchesBegan: function (n, t) {
 },
 
 onTouchesEnded: function () {
-  document.getElementById('viewport').style.cursor = 'url("sprites/cursor_open.cur"), pointer';
+  document.getElementById('viewport').style.cursor = 'url("/sprites/cursor_open.cur"), pointer';
 
   if (this.isPanning) {
     this.isPanning = !1;
