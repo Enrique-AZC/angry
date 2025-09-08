@@ -138,7 +138,6 @@ GameObjectRoll = {
   Boulder: 'Boulder',
   Dirt: 'Dirt'
 },
-j;
 Object.freeze(GameObjectRoll);
 var b2Body = Box2D.Dynamics.b2Body,
 b2BodyDef = Box2D.Dynamics.b2BodyDef,
