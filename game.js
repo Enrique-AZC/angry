@@ -2173,135 +2173,155 @@ GameLayer = cc.Layer.extend({
     } else birds_gone ||
     setTimeout('b2.set_birds_gone();', 4000)
   },
-  onTouchesBegan: function (n, t) {
-    if (!game_over) {
-      if (this.isDraggingSling) return this.onTouchesEnded(n, t);
-      if (this.current_bird < 3) {
-        var i = n[0].getLocation(),
-        r = cc.pSub(this.birdStartPos, i);
-        (this.isDraggingSling = cc.pLength(r) < this.slingRadius.max) &&
-        !this.birdSprite[this.current_bird].body &&
-        !this.slingRubber3 &&
-        (
-          this.slingRubber3 = this.addObject({
-            name: 'sling3',
-            x: i.x,
-            y: i.y,
-            scaleY: 1.5,
-            scaleX: 2,
-            anchor: cc.p(0, 0.5),
-            z: 1
-          })
-        )
-      }
-      this.isDraggingSling ? document.getElementById('viewport').style.cursor = 'url(\'sprites/cursor_hold.cur\'), pointer' : (
+onTouchesBegan: function (n, t) {
+  if (!game_over) {
+    if (this.isDraggingSling) return this.onTouchesEnded(n, t);
+
+    if (this.current_bird < 3) {
+      // ✅ Ajuste de offset y escala
+      var rect = document.getElementById('viewport').getBoundingClientRect();
+      var scale = cc.Director.getInstance()._contentScaleFactor;
+      var i = n[0].getLocation();
+      i.x = (i.x - rect.left) / scale + 200;
+      i.y = (i.y - rect.top) / scale;
+
+      var r = cc.pSub(this.birdStartPos, i);
+      (this.isDraggingSling = cc.pLength(r) < this.slingRadius.max) &&
+      !this.birdSprite[this.current_bird].body &&
+      !this.slingRubber3 &&
+      (
+        this.slingRubber3 = this.addObject({
+          name: 'sling3',
+          x: i.x,
+          y: i.y,
+          scaleY: 1.5,
+          scaleX: 2,
+          anchor: cc.p(0, 0.5),
+          z: 1
+        })
+      )
+    }
+
+    this.isDraggingSling
+      ? document.getElementById('viewport').style.cursor = 'url("sprites/cursor_hold.cur"), pointer'
+      : (
         this.isPanning = {
           x: n[0]._point.x * cc.Director.getInstance()._contentScaleFactor,
           start: 0
         },
-        this.focus_pos = - 2
+        this.focus_pos = -2
       )
-    }
-  },
+  }
+},
+
   onTouchesMoved: function (n) {
-    var f,
-    r,
-    e,
-    o;
-    if (this.isPanning) {
-      f = {
-        x: n[0]._point.x * cc.Director.getInstance()._contentScaleFactor
-      },
-      r = - (
-        this.isPanning.start + (
-          this.isPanning.x - (
-            f.x + parseInt(document.getElementById('viewport').style.marginLeft)
-          )
+  var f, r, e, o;
+  if (this.isPanning) {
+    f = { x: n[0]._point.x * cc.Director.getInstance()._contentScaleFactor };
+    r = -(
+      this.isPanning.start + (
+        this.isPanning.x - (
+          f.x + parseInt(document.getElementById('viewport').style.marginLeft)
         )
-      ),
-      r > 0 &&
-      (r = 0),
-      r < - 1200 &&
-      (r = - 1200),
-      document.getElementById('viewport').style.marginLeft = r + 'px',
-      this.focus_pos = - 2;
-      return
-    }
-    if (
-      this.isDraggingSling &&
-      !(this.current_bird >= 3) &&
-      !this.birdSprite[this.current_bird].body
-    ) {
-      this.slingRubber1.setVisible(!0),
-      this.slingRubber2.setVisible(!0),
-      this.slingRubber3.setVisible(!0);
-      var f = n[0].getLocation(),
-      s = cc.pSub(f, this.birdStartPos),
-      u = cc.pLength(s),
-      i = cc.pToAngle(s);
-      i = i < 0 ? Math.PI * 2 + i : i,
-      u = MathH.clamp(u, this.slingRadius.min, this.slingRadius.max),
-      i <= this.slingAngle.max &&
-      i >= this.slingAngle.min &&
-      (u = this.slingRadius.min),
-      this.birdSprite[this.current_bird].setPosition(cc.pAdd(this.birdStartPos, cc.p(u * Math.cos(i), u * Math.sin(i)))),
-      e = function (n, t, i, r) {
-        var e = n.getPosition(),
-        o = cc.pSub(t, e),
-        f = cc.pToAngle(o),
-        s = cc.RADIANS_TO_DEGREES(f),
-        u = cc.pLength(o) + (i || 8);
-        n.setRotation( - s),
-        n.setScaleX( - (u / n.getContentSize().width)),
-        r &&
-        (
-          n.setScaleY(1.1 - 0.7 / this.slingRadius.max * u),
-          this.slingRubber3.setRotation( - s),
-          this.slingRubber3.setPosition(cc.pAdd(e, cc.p(u * Math.cos(f), u * Math.sin(f))))
-        )
-      }.bind(this),
-      o = this.birdSprite[this.current_bird].getPosition(),
-      e(this.slingRubber2, o, 13, !0),
-      e(this.slingRubber1, o, 0),
-      this.slingRubber1.setScaleY(this.slingRubber2.getScaleY())
-    }
-  },
-  onTouchesEnded: function () {
-    if (
-      document.getElementById('viewport').style.cursor = 'url(\'sprites/cursor_open.cur\'), pointer',
-      this.isPanning
-    ) {
-      this.isPanning = !1;
-      return
-    }
-    if (
-      !(this.current_bird >= 3) &&
-      !this.birdSprite[this.current_bird].body &&
-      this.isDraggingSling
-    ) {
-      this.slingRubber1.setVisible(!1),
-      this.slingRubber2.setVisible(!1),
-      this.slingRubber3.setVisible(!1),
-      b2.enablePhysicsFor({
-        type: 'dynamic',
-        shape: 'circle',
-        sprite: this.birdSprite[this.current_bird],
-        density: 15,
-        restitution: 0.4,
-        userData: new BodyUserData(GameObjectRoll.Bird, 250)
-      });
-      var i = cc.pSub(
-        this.birdStartPos,
-        this.birdSprite[this.current_bird].getPosition()
-      ),
-      r = cc.pMult(i, 12),
-      u = this.birdSprite[this.current_bird].body.GetWorldCenter();
-      this.birdSprite[this.current_bird].body.ApplyImpulse(r, u),
-      sounds[0].play(),
-      this.focus_pos = this.current_bird,
-      this.isDraggingSling = !1
-    }
-  },
+      )
+    );
+    r > 0 && (r = 0);
+    r < -1200 && (r = -1200);
+    document.getElementById('viewport').style.marginLeft = r + 'px';
+    this.focus_pos = -2;
+    return;
+  }
+
+  if (
+    this.isDraggingSling &&
+    !(this.current_bird >= 3) &&
+    !this.birdSprite[this.current_bird].body
+  ) {
+    this.slingRubber1.setVisible(!0);
+    this.slingRubber2.setVisible(!0);
+    this.slingRubber3.setVisible(!0);
+
+    // ✅ Ajuste de offset y escala
+    var rect = document.getElementById('viewport').getBoundingClientRect();
+    var scale = cc.Director.getInstance()._contentScaleFactor;
+    var f = n[0].getLocation();
+    f.x = (f.x - rect.left) / scale + 200;
+    f.y = (f.y - rect.top) / scale;
+
+    var s = cc.pSub(f, this.birdStartPos),
+        u = cc.pLength(s),
+        i = cc.pToAngle(s);
+
+    i = i < 0 ? Math.PI * 2 + i : i;
+    u = MathH.clamp(u, this.slingRadius.min, this.slingRadius.max);
+    i <= this.slingAngle.max && i >= this.slingAngle.min && (u = this.slingRadius.min);
+
+    this.birdSprite[this.current_bird].setPosition(
+      cc.pAdd(this.birdStartPos, cc.p(u * Math.cos(i), u * Math.sin(i)))
+    );
+
+    e = function (n, t, i, r) {
+      var e = n.getPosition(),
+          o = cc.pSub(t, e),
+          f = cc.pToAngle(o),
+          s = cc.RADIANS_TO_DEGREES(f),
+          u = cc.pLength(o) + (i || 8);
+      n.setRotation(-s);
+      n.setScaleX(-(u / n.getContentSize().width));
+      r && (
+        n.setScaleY(1.1 - 0.7 / this.slingRadius.max * u),
+        this.slingRubber3.setRotation(-s),
+        this.slingRubber3.setPosition(cc.pAdd(e, cc.p(u * Math.cos(f), u * Math.sin(f))))
+      );
+    }.bind(this);
+
+    o = this.birdSprite[this.current_bird].getPosition();
+    e(this.slingRubber2, o, 13, !0);
+    e(this.slingRubber1, o, 0);
+    this.slingRubber1.setScaleY(this.slingRubber2.getScaleY());
+  }
+},
+
+onTouchesEnded: function () {
+  document.getElementById('viewport').style.cursor = 'url("sprites/cursor_open.cur"), pointer';
+
+  if (this.isPanning) {
+    this.isPanning = !1;
+    return;
+  }
+
+  if (
+    !(this.current_bird >= 3) &&
+    !this.birdSprite[this.current_bird].body &&
+    this.isDraggingSling
+  ) {
+    this.slingRubber1.setVisible(!1);
+    this.slingRubber2.setVisible(!1);
+    this.slingRubber3.setVisible(!1);
+
+    b2.enablePhysicsFor({
+      type: 'dynamic',
+      shape: 'circle',
+      sprite: this.birdSprite[this.current_bird],
+      density: 15,
+      restitution: 0.4,
+      userData: new BodyUserData(GameObjectRoll.Bird, 250)
+    });
+
+    var i = cc.pSub(
+          this.birdStartPos,
+          this.birdSprite[this.current_bird].getPosition()
+        ),
+        r = cc.pMult(i, 12),
+        u = this.birdSprite[this.current_bird].body.GetWorldCenter();
+
+    this.birdSprite[this.current_bird].body.ApplyImpulse(r, u);
+    sounds[0].play();
+    this.focus_pos = this.current_bird;
+    this.isDraggingSling = !1;
+  }
+}
+,
   onKeyUp: function () {
   },
   onKeyDown: function () {
