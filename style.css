@@ -192,7 +192,7 @@ body {
 #game_div {
   position: absolute;
   inset: 0;
-  background: url(bg.png) no-repeat center center;
+  background: url(/bg.png) no-repeat center center;
   background-size: cover;
 }
 
