@@ -13,15 +13,10 @@ var cocos2dApp = cc.Application.extend({
             cc.LoaderScene.getInstance().draw();
         };
 
-        // Preload de todos los recursos
-        var resources = g_resources; // asegurarse de que g_resources() devuelve array
-        cc.Loader.getInstance().preload(resources, function() {
-            // Todas las texturas cargadas
-
-            // "Sleep seguro" de 500 ms antes de iniciar la escena
-            setTimeout(function() {
-                cc.AppController.shareAppController().didFinishLaunchingWithOptions();
-            }, 0); // ajusta tiempo si quieres
+        // Preload de todos los recursos y lanzar escena solo cuando estén cargados
+        cc.Loader.getInstance().preload(g_resources, function() {
+            // Aquí todas las texturas están listas
+            cc.AppController.shareAppController().didFinishLaunchingWithOptions();
         }, this);
     },
 
