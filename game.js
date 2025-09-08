@@ -31,7 +31,7 @@ function show_level_select() {
       i = '&nbsp;';
        else for (i = '', r = storage['ab_level_' + t].split(':') [1], u = 0; u <= 2; u++) i += r > u ? '&#9733;' : '&#9734;';
       n += '<td onclick="start_game(' + t + ');">' + (
-        o ? t + 1 + '<div style="margin-top:-19px;">' + i + '</div></td>' : '<img src="lock.png">'
+        o ? t + 1 + '<div style="margin-top:-19px;">' + i + '</div></td>' : '<img src="/lock.png">'
       ),
       t++,
       r ||
@@ -118,7 +118,7 @@ var g_resources = function () {
     n++
   ) t.push({
     type: 'image',
-    src: '' + i[n] + '.png'
+    src: '/' + i[n] + '.png'
   });
   return t
 }(),
@@ -582,8 +582,8 @@ GameLayer = cc.Layer.extend({
         game.isPanning = !1
       },
       document.getElementById('play_button').onclick = show_level_select,
-      document.getElementById('play_button').innerHTML = '<img src="play.png">',
-      document.getElementById('viewport').style.cursor = 'url(\'cursor_open.cur\'), pointer'
+      document.getElementById('play_button').innerHTML = '<img src="/play.png">',
+      document.getElementById('viewport').style.cursor = 'url(\'/cursor_open.cur\'), pointer'
     ),
     document.getElementById('win_popup').style.display = 'none',
     document.getElementById('lose_popup').style.display = 'none',
@@ -2353,7 +2353,7 @@ oggs = [
 sounds = new Array(oggs.length),
 sound_instance = 1;
 for (j = 0; j < oggs.length; j++) sounds[j] = new Audio(''),
-sounds[j].src = '' + oggs[j] + '.mp3',
+sounds[j].src = '/' + oggs[j] + '.mp3',
 j > 0 &&
 (sounds[j].volume = 0.2);
 typeof document.oncontextmenu != 'undefined' ? document.oncontextmenu = ce : document.onclick = nrc,
