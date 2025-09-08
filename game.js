@@ -538,25 +538,31 @@ GameLayer = cc.Layer.extend({
   getTexture: function (n) {
     return cc.TextureCache.getInstance().addImage('' + n + '.png')
   },
-  addObject: function (n) {
-    var t = cc.Sprite.createWithTexture(this.getTexture(n.name));
-    return t.setAnchorPoint(n.anchor || cc.p(0.5, 0.5)),
-    t.setScaleX(n.scaleX || n.scale || 1),
-    t.setScaleY(n.scaleY || n.scale || 1),
-    t.setRotation(n.rotation || 0),
-    t.setPosition(cc.p(n.x || 0, n.y || 0)),
-    n.shape &&
-    b2.enablePhysicsFor({
-      type: n.type,
-      shape: n.shape,
-      sprite: t,
-      radius: n.radius,
-      density: n.density,
-      userData: n.userData
-    }),
-    this.addChild(t, n.z || 0),
-    t
-  },
+  addObject: function(n) {
+    var tex = this.getTexture(n.name);
+    if (!tex) {
+        console.error('No se pudo cargar la textura:', n.name);
+        return null;
+    }
+    var t = cc.Sprite.createWithTexture(tex);
+    t.setAnchorPoint(n.anchor || cc.p(0.5, 0.5));
+    t.setScaleX(n.scaleX || n.scale || 1);
+    t.setScaleY(n.scaleY || n.scale || 1);
+    t.setRotation(n.rotation || 0);
+    t.setPosition(cc.p(n.x || 0, n.y || 0));
+    if (n.shape) {
+        b2.enablePhysicsFor({
+            type: n.type,
+            shape: n.shape,
+            sprite: t,
+            radius: n.radius,
+            density: n.density,
+            userData: n.userData
+        });
+    }
+    this.addChild(t, n.z || 0);
+    return t;
+},
   init: function () {
     resize_screen();
     window.onresize = resize_screen;
