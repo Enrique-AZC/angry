@@ -541,7 +541,7 @@ getTexture: function(name) {
         console.warn('Textura todavía no cargada o inexistente:', name);
     }
     return tex;
-}
+},
 
   addObject: function(n) {
     var tex = this.getTexture(n.name);
