@@ -536,12 +536,10 @@ GameLayer = cc.Layer.extend({
   slingRubber3: null,
   current_bird: 0,
 getTexture: function(name) {
-    var tex = cc.TextureCache.getInstance().addImage(name + '.png');
-    if (!tex) {
-        console.warn('Textura todavía no cargada o inexistente:', name);
-    }
-    return tex;
-},
+    // Devuelve la textura ya cargada
+    return cc.TextureCache.getInstance().getTextureForKey(name + '.png');
+}
+,
 
   addObject: function(n) {
     var tex = this.getTexture(n.name);
