@@ -14,7 +14,7 @@ var cocos2dApp = cc.Application.extend({
         };
 
         // Preload de todos los recursos
-        var resources = g_resources(); // asegurarse de que g_resources() devuelve array
+        var resources = g_resources; // asegurarse de que g_resources() devuelve array
         cc.Loader.getInstance().preload(resources, function() {
             // Todas las texturas cargadas
 
