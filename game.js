@@ -31,7 +31,7 @@ function show_level_select() {
       i = '&nbsp;';
        else for (i = '', r = storage['ab_level_' + t].split(':') [1], u = 0; u <= 2; u++) i += r > u ? '&#9733;' : '&#9734;';
       n += '<td onclick="start_game(' + t + ');">' + (
-        o ? t + 1 + '<div style="margin-top:-19px;">' + i + '</div></td>' : '<img src="/lock.png">'
+        o ? t + 1 + '<div style="margin-top:-19px;">' + i + '</div></td>' : '<img src="lock.png">'
       ),
       t++,
       r ||
@@ -122,7 +122,6 @@ var g_resources = function () {
   });
   return t
 }(),
-
 MathH = {
   clamp: function (n, t, i) {
     return Math.min(i, Math.max(n, t))
@@ -153,6 +152,7 @@ GameObjectRoll = {
   Boulder: 'Boulder',
   Dirt: 'Dirt'
 },
+j;
 Object.freeze(GameObjectRoll);
 var b2Body = Box2D.Dynamics.b2Body,
 b2BodyDef = Box2D.Dynamics.b2BodyDef,
@@ -536,7 +536,7 @@ GameLayer = cc.Layer.extend({
   slingRubber3: null,
   current_bird: 0,
   getTexture: function (n) {
-    return cc.TextureCache.getInstance().addImage('' + n + '.png')
+    return cc.TextureCache.getInstance().addImage('/' + n + '.png')
   },
   addObject: function (n) {
     var t = cc.Sprite.createWithTexture(this.getTexture(n.name));
@@ -2203,7 +2203,7 @@ onTouchesBegan: function (n, t) {
     }
 
     this.isDraggingSling
-      ? document.getElementById('viewport').style.cursor = 'url("cursor_hold.cur"), pointer'
+      ? document.getElementById('viewport').style.cursor = 'url("/cursor_hold.cur"), pointer'
       : (
         this.isPanning = {
           x: n[0]._point.x * cc.Director.getInstance()._contentScaleFactor,
@@ -2283,7 +2283,7 @@ onTouchesBegan: function (n, t) {
 },
 
 onTouchesEnded: function () {
-  document.getElementById('viewport').style.cursor = 'url("cursor_open.cur"), pointer';
+  document.getElementById('viewport').style.cursor = 'url("/cursor_open.cur"), pointer';
 
   if (this.isPanning) {
     this.isPanning = !1;
