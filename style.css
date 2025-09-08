@@ -8,7 +8,7 @@
 /* ===== Fuente personalizada ===== */
 @font-face {
   font-family: "komika";
-  src: url("/komika.ttf");
+  src: url("komika.ttf");
 }
 
 /* ===== Overlay para girar dispositivo ===== */
