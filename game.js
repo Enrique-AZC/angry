@@ -93,35 +93,21 @@ function ce(n) {
   (n.returnValue = 0, n.cancelBubble = !0),
   !1
 }
-var g_resources = function () {
-  for (
-    var t = [],
-    i = [
-      'bg',
-      'platform',
-      'bird',
-      'enemy',
-      'sling1',
-      'sling2',
-      'sling3',
-      'ground',
-      'wood1',
-      'wood2',
-      'dirt',
-      'boulder',
-      'smoke',
-      'menu_refresh',
-      'menu_back'
-    ],
-    n = 0;
-    n < i.length;
-    n++
-  ) t.push({
-    type: 'image',
-    src: '/' + i[n] + '.png'
-  });
-  return t
-}(),
+function g_resources() {
+  var recursos = [];
+  var nombres = ['bg', 'platform', 'bird', 'enemy', 'sling1', 'sling2', 'sling3',
+                 'ground', 'wood1', 'wood2', 'dirt', 'boulder', 'smoke', 
+                 'menu_refresh', 'menu_back'];
+
+  for (var i = 0; i < nombres.length; i++) {
+    recursos.push({ type: 'image', src: nombres[i] + '.png' });
+  }
+
+  return recursos;
+}
+
+var g_resources_list = g_resources();
+,
 MathH = {
   clamp: function (n, t, i) {
     return Math.min(i, Math.max(n, t))
