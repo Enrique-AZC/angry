@@ -21,7 +21,7 @@ var cocos2dApp = cc.Application.extend({
             // "Sleep seguro" de 500 ms antes de iniciar la escena
             setTimeout(function() {
                 cc.AppController.shareAppController().didFinishLaunchingWithOptions();
-            }, 500); // ajusta tiempo si quieres
+            }, 50); // ajusta tiempo si quieres
         }, this);
     },
 
