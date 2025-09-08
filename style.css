@@ -1,170 +1,220 @@
-*
-{
-margin:0;
-padding:0;
+/* ===== Reset básico ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@font-face
-{
-font-family: "komika";
-src: url("sprites/komika.ttf");
+/* ===== Fuente personalizada ===== */
+@font-face {
+  font-family: "komika";
+  src: url("sprites/komika.ttf");
 }
 
-@media (orientation: portrait)
-{ /* tablet and smaller */
-#overlay
-	{
-	position: absolute;
-	z-index: 9999;
-	width: 100%;
-	height:100%;
-	top: 0;
-	bottom: 0;
-	content: "";
-	background: #212121 url(sprites/turndevice.png) 0 0 no-repeat;
-	background-size: 100% auto;
-	}
+/* ===== Overlay para girar dispositivo ===== */
+@media (orientation: portrait) { 
+  #overlay {
+    position: absolute;
+    z-index: 9999;
+    inset: 0;
+    background: #212121 url(sprites/turndevice.png) no-repeat center;
+    background-size: contain;
+  }
 }
 
-body
-{
-//width:1000px;
-//height:600px;
-cursor: url('sprites/cursor_open.cur'), auto !important;
-color:#fff;
-text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
--ms-filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000);
-font-family:komika;
-overflow:hidden;
+/* ===== Fondo general ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: #2b98f2;
+  overflow: hidden;
 }
 
-#main_div
-{
-position:absolute;
-width:1000px;
-height:600px;
-overflow:hidden;
-transform-origin:0px 0px;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: url('sprites/cursor_open.cur'), auto !important;
+  font-family: komika, sans-serif;
+  color: #fff;
+  text-shadow: -1px -1px 0 #000,
+               1px -1px 0 #000,
+              -1px 1px 0 #000,
+               1px 1px 0 #000;
+  overflow: hidden;
 }
 
-.test
-{
-cursor: url('sprites/cursor_open.cur'), auto !important;
+/* ===== Contenedor principal ===== */
+
+#main_div {
+  position: absolute;
+  width: 1000px;
+  height: 600px;
+  overflow: hidden;
+
+  /* centrar en ambos ejes sin transform */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
 }
 
-#score_div
-{
-position:absolute;
-top:4px;
-left:850px;
-font-size:28px;
+
+
+/* ===== Marcador ===== */
+#score_div {
+  position: absolute;
+  top: 4px;
+  right: 20px;
+  font-size: 28px;
 }
 
-#win_popup
-{
-position:absolute;
-top:100px;
-left:500px;
-margin-left:-272px;
-width:545px;
-height:298px;
-background-image:url(sprites/win_popup.png);
-display:none;
+/* ===== Popups ===== */
+#win_popup,
+#lose_popup {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 545px;
+  height: 298px;
+  display: none;
+  background-size: cover;
 }
 
-#lose_popup
-{
-position:absolute;
-top:100px;
-left:500px;
-margin-left:-272px;
-width:541px;
-height:298px;
-background-image:url(sprites/lose_popup.png);
-display:none;
+#win_popup {
+  background-image: url(sprites/win_popup.png);
 }
 
-.popup_inner
-{
-position:absolute;
-top:27px;
-left:10px;
-width:520px;
-height:200px;
-text-align:center;
-font-size:33px;
+#lose_popup {
+  background-image: url(sprites/lose_popup.png);
 }
 
-#level_select_div td
-{
-border:3px solid #fbbd3b;
-border-radius:4px;
-width:120px;
-height:120px;
-font-size:24px;
-text-align:center;
+.popup_inner {
+  position: absolute;
+  top: 27px;
+  left: 10px;
+  width: 520px;
+  height: 200px;
+  text-align: center;
+  font-size: 33px;
 }
 
-#smoke_div
-{
-position:absolute;
-width:32px;
-height:32px;
-background-image:url(sprites/smoke_big.png);
-display:none;
+/* ===== Selector de niveles ===== */
+#level_select_div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  min-width: 800px;
+  max-width: 1200px;
+  border: 5px solid #fbbd3b;
+  border-radius: 16px;
+  background: #62d4bb;
+  font-size: 30px;
+  z-index: 3;
+  display: none;
+  padding: 20px;
 }
 
-#frontpage_div
-{
-position:absolute;z-index:2;width:1000px;height:600px;background-image:url(sprites/logo.jpg);background-size:100% 100%;
+#level_select_div table {
+  border-collapse: collapse;
+  margin: 0 auto;
 }
 
-#play_button
-{
-position:absolute;top:440px;left:435px;width:168px;height:82px;font-size:37px;text-align:center;
+#level_select_div td {
+  border: 3px solid #fbbd3b;
+  border-radius: 8px;
+  width: 80px;
+  height: 80px;
+  font-size: 18px;
+  text-align: center;
+  vertical-align: middle;
+  background: #3b2a1a;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-#level_select_div
-{
-position:absolute;top:30px;left:30px;width:940px;height:520px;border:5px solid #fbbd3b;border-radius:16px;background:#62d4bb;font-size:30px;z-index:3;display:none;
+#level_select_div td:hover {
+  transform: scale(1.1);
+  background: #5c4033;
 }
 
-#game_div
-{
-width:1000px;height:600px;background-image:url(sprites/bg.png);background-position:-111px 0px;
+/* ===== Humo ===== */
+#smoke_div {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-image: url(sprites/smoke_big.png);
+  display: none;
 }
 
-#viewport
-{
-margin-left:0px;
+/* ===== Pantalla de portada ===== */
+#frontpage_div {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-color: #00bfff;
+  background-image: url(sprites/logo.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 60px;
 }
 
-#button_level_select
-{
-position:absolute;top:206px;left:65px;width:100px;height:94px;
+/* ===== Botón jugar ===== */
+#play_button {
+  background: #ffc10700;
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 2px 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+  margin-bottom: -40px;
 }
 
-#button_game_init
-{
-position:absolute;top:206px;left:219px;width:100px;height:94px;
+#play_button:hover {
+  transform: scale(1.1);
+  background: #ff990000;
 }
 
-#button_level_up
-{
-position:absolute;top:206px;left:374px;width:100px;height:94px;
+/* ===== Pantalla de juego ===== */
+#game_div {
+  position: absolute;
+  inset: 0;
+  background: url(sprites/bg.png) no-repeat center center;
+  background-size: cover;
 }
 
-#button_level_select_2
-{
-position:absolute;top:206px;left:163px;width:100px;height:94px;
+/* ===== Canvas ===== */
+#viewport {
+  margin-left:0px;
 }
 
-#button_game_init_2
-{
-position:absolute;top:206px;left:317px;width:100px;height:94px;
+
+/* ===== Botones dentro de popups ===== */
+#button_level_select,
+#button_game_init,
+#button_level_up,
+#button_level_select_2,
+#button_game_init_2 {
+  position: absolute;
+  width: 100px;
+  height: 94px;
 }
 
-#moregames
-{
-position:absolute;top:0px;left:442px;background:#9f0;font-size:17px;border-radius:6px;border:2px solid #000;padding:0px 10px 0px 10px;cursor:pointer;color:#fff;z-index:5;
-}
+#button_level_select   { top: 206px; left: 65px; }
+#button_game_init      { top: 206px; left: 219px; }
+#button_level_up       { top: 206px; left: 374px; }
+#button_level_select_2 { top: 206px; left: 163px; }
+#button_game_init_2    { top: 206px; left: 317px; }
