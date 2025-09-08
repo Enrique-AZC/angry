@@ -2203,7 +2203,7 @@ onTouchesBegan: function (n, t) {
     }
 
     this.isDraggingSling
-      ? document.getElementById('viewport').style.cursor = 'url("/cursor_hold.cur"), pointer'
+      ? document.getElementById('viewport').style.cursor = 'url("cursor_hold.cur"), pointer'
       : (
         this.isPanning = {
           x: n[0]._point.x * cc.Director.getInstance()._contentScaleFactor,
@@ -2283,7 +2283,7 @@ onTouchesBegan: function (n, t) {
 },
 
 onTouchesEnded: function () {
-  document.getElementById('viewport').style.cursor = 'url("/cursor_open.cur"), pointer';
+  document.getElementById('viewport').style.cursor = 'url("cursor_open.cur"), pointer';
 
   if (this.isPanning) {
     this.isPanning = !1;
@@ -2353,7 +2353,7 @@ oggs = [
 sounds = new Array(oggs.length),
 sound_instance = 1;
 for (j = 0; j < oggs.length; j++) sounds[j] = new Audio(''),
-sounds[j].src = '/' + oggs[j] + '.mp3',
+sounds[j].src = '' + oggs[j] + '.mp3',
 j > 0 &&
 (sounds[j].volume = 0.2);
 typeof document.oncontextmenu != 'undefined' ? document.oncontextmenu = ce : document.onclick = nrc,
