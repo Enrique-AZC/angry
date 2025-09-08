@@ -536,7 +536,7 @@ GameLayer = cc.Layer.extend({
   slingRubber3: null,
   current_bird: 0,
   getTexture: function (n) {
-    return cc.TextureCache.getInstance().addImage('/' + n + '.png')
+    return cc.TextureCache.getInstance().addImage('' + n + '.png')
   },
   addObject: function (n) {
     var t = cc.Sprite.createWithTexture(this.getTexture(n.name));
