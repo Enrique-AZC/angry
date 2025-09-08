@@ -107,7 +107,7 @@ function g_resources() {
 }
 
 var g_resources_list = g_resources();
-,
+
 MathH = {
   clamp: function (n, t, i) {
     return Math.min(i, Math.max(n, t))
