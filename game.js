@@ -582,8 +582,8 @@ GameLayer = cc.Layer.extend({
         game.isPanning = !1
       },
       document.getElementById('play_button').onclick = show_level_select,
-      document.getElementById('play_button').innerHTML = '<img src="/play.png">',
-      document.getElementById('viewport').style.cursor = 'url(\'/cursor_open.cur\'), pointer'
+      document.getElementById('play_button').innerHTML = '<img src="play.png">',
+      document.getElementById('viewport').style.cursor = 'url(\'cursor_open.cur\'), pointer'
     ),
     document.getElementById('win_popup').style.display = 'none',
     document.getElementById('lose_popup').style.display = 'none',
