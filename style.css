@@ -17,7 +17,7 @@
     position: absolute;
     z-index: 9999;
     inset: 0;
-    background: #212121 url(/turndevice.png) no-repeat center;
+    background: #212121 url(turndevice.png) no-repeat center;
     background-size: contain;
   }
 }
@@ -86,11 +86,11 @@ body {
 }
 
 #win_popup {
-  background-image: url(/win_popup.png);
+  background-image: url(win_popup.png);
 }
 
 #lose_popup {
-  background-image: url(/lose_popup.png);
+  background-image: url(lose_popup.png);
 }
 
 .popup_inner {
@@ -150,7 +150,7 @@ body {
   position: absolute;
   width: 32px;
   height: 32px;
-  background-image: url(/smoke_big.png);
+  background-image: url(smoke_big.png);
   display: none;
 }
 
@@ -160,7 +160,7 @@ body {
   inset: 0;
   z-index: 2;
   background-color: #00bfff;
-  background-image: url(/logo.jpg);
+  background-image: url(logo.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -192,7 +192,7 @@ body {
 #game_div {
   position: absolute;
   inset: 0;
-  background: url(/bg.png) no-repeat center center;
+  background: url(bg.png) no-repeat center center;
   background-size: cover;
 }
 
